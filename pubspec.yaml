@@ -39,6 +39,9 @@ dependencies:
   f_net:
     path: ./component/f_net
 
+  f_router:
+    path: ./component/f_router
+
 
 dev_dependencies:
   flutter_test:
