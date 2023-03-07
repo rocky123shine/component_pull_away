@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var homeDao = HomeDao();
     homeDao.getBanner();
+
     // homeDao.getaaa();
     return MaterialApp(
       title: '组件抽离',
