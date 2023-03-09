@@ -1,9 +1,11 @@
+import 'package:component_pull_away/pages/second_page.dart';
+import 'package:f_router/navigator/f_navigator.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+  HomePage({super.key, required this.title});
 
-  final String title;
+  late String title;
 
   @override
   State<HomePage> createState() => _MyHomePageState();
@@ -35,6 +37,16 @@ class _MyHomePageState extends State<HomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            MaterialButton(
+              onPressed: () {
+                Map args111 = <String, String>{};
+                args111["args"] = "hahahahha";
+                FNavigator.getInstance().onJumTo(
+                    wrapPage(SecondPage(title: "", args: args111), "scond"));
+              },
+              color: Colors.blueAccent,
+              child: const Text("jump"),
+            )
           ],
         ),
       ),

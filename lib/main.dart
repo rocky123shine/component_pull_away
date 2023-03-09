@@ -1,9 +1,12 @@
 import 'package:component_pull_away/dao/home_dao.dart';
 import 'package:component_pull_away/pages/home_page.dart';
+import 'package:component_pull_away/pages/second_page.dart';
+import 'package:component_pull_away/pages/third_page.dart';
+import 'package:f_router/navigator/f_navigator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -14,56 +17,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var homeDao = HomeDao();
     homeDao.getBanner();
-    TestRouterDelegate routerDelegate = TestRouterDelegate();
+    // TestRouterDelegate routerDelegate = TestRouterDelegate();
 
     // homeDao.getaaa();
-    return MaterialApp(
-      title: '组件抽离',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Router(routerDelegate: routerDelegate),
-    );
+    // return MaterialApp(
+    //   title: '组件抽离',
+    //   theme: ThemeData(
+    //     primarySwatch: Colors.blue,
+    //   ),
+    //   home: Router(routerDelegate: routerDelegate),
+    // );
+    return MaterialApp.router(
+        title: '组件抽离',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        //routerDelegate: routerDelegate,
+        routerDelegate: FNavigator.getInstance()
+            .routerDelegate(wrapPage(HomePage(title: "title"), "home")));
   }
-}
-
-MaterialPage wrapPage(Widget child) {
-  return MaterialPage(key: ValueKey(child.hashCode), child: child);
-}
-
-class TestRouterDelegate extends RouterDelegate<RouterPath>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouterPath> {
-  RouterPath? path;
-
-  List<MaterialPage> pages = [
-    wrapPage(const HomePage(
-      title: 'home',
-    ))
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Navigator(
-      key: navigatorKey,
-      pages: pages,
-      onPopPage: (route, result) {
-        if (!route.didPop(result)) return false;
-        return true;
-      },
-    );
-  }
-
-  @override
-  GlobalKey<NavigatorState>? get navigatorKey => GlobalKey();
-
-  @override
-  Future<void> setNewRoutePath(RouterPath configuration) async {
-    path = configuration;
-  }
-}
-
-class RouterPath {
-  final String location;
-
-  RouterPath.home() : location = "/";
 }
