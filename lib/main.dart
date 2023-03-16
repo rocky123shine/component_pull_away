@@ -1,72 +1,39 @@
 import 'package:component_pull_away/dao/home_dao.dart';
+import 'package:component_pull_away/pages/home_page.dart';
+import 'package:component_pull_away/pages/second_page.dart';
+import 'package:component_pull_away/pages/third_page.dart';
+import 'package:f_router/navigator/f_navigator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     var homeDao = HomeDao();
     homeDao.getBanner();
+    // TestRouterDelegate routerDelegate = TestRouterDelegate();
 
     // homeDao.getaaa();
-    return MaterialApp(
-      title: '组件抽离',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+    // return MaterialApp(
+    //   title: '组件抽离',
+    //   theme: ThemeData(
+    //     primarySwatch: Colors.blue,
+    //   ),
+    //   home: Router(routerDelegate: routerDelegate),
+    // );
+    return MaterialApp.router(
+        title: '组件抽离',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        //routerDelegate: routerDelegate,
+        routerDelegate: FNavigator.getInstance()
+            .routerDelegate(wrapPage(HomePage(title: "title"), "home")));
   }
 }
